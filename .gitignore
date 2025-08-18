@@ -1,0 +1,32 @@
+# Generated protobuf files
+v1/
+*.pb.go
+*.pb.gw.go
+*.py
+*.js
+*.ts
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Go files
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Dependencies
+vendor/
+
+# buf lock file
+buf.lock
