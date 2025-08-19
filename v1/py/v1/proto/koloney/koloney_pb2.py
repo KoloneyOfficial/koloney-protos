@@ -26,14 +26,14 @@ from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1ev1/proto/koloney/koloney.proto\x12\x07koloney\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"2\n\x11GetBalanceRequest\x12\x1d\n\naccount_id\x18\x01 \x01(\tR\taccountId\"\x89\x01\n\x12GetBalanceResponse\x12\x18\n\x07\x62\x61lance\x18\x01 \x01(\x01R\x07\x62\x61lance\x12\x1a\n\x08\x63urrency\x18\x02 \x01(\tR\x08\x63urrency\x12=\n\x0clast_updated\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\x0blastUpdated2l\n\x0eKoloneyService\x12Z\n\nGetBalance\x12\x1a.koloney.GetBalanceRequest\x1a\x1b.koloney.GetBalanceResponse\"\x13\x82\xd3\xe4\x93\x02\r\x12\x0b/v1/balanceB\x91\x01\n\x0b\x63om.koloneyB\x0cKoloneyProtoP\x01Z8github.com/koloney/koloney-protos/v1/go/v1/proto/koloney\xa2\x02\x03KXX\xaa\x02\x07Koloney\xca\x02\x07Koloney\xe2\x02\x13Koloney\\GPBMetadata\xea\x02\x07Koloneyb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1ev1/proto/koloney/koloney.proto\x12\x07koloney\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"2\n\x11GetBalanceRequest\x12\x1d\n\naccount_id\x18\x01 \x01(\tR\taccountId\"\x89\x01\n\x12GetBalanceResponse\x12\x18\n\x07\x62\x61lance\x18\x01 \x01(\x01R\x07\x62\x61lance\x12\x1a\n\x08\x63urrency\x18\x02 \x01(\tR\x08\x63urrency\x12=\n\x0clast_updated\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\x0blastUpdated2l\n\x0eKoloneyService\x12Z\n\nGetBalance\x12\x1a.koloney.GetBalanceRequest\x1a\x1b.koloney.GetBalanceResponse\"\x13\x82\xd3\xe4\x93\x02\r\x12\x0b/v1/balanceB~\n\x0b\x63om.koloneyB\x0cKoloneyProtoP\x01Z%koloney-protos/v1/go/v1/proto/koloney\xa2\x02\x03KXX\xaa\x02\x07Koloney\xca\x02\x07Koloney\xe2\x02\x13Koloney\\GPBMetadata\xea\x02\x07Koloneyb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'v1.proto.koloney.koloney_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._loaded_options = None
-  _globals['DESCRIPTOR']._serialized_options = b'\n\013com.koloneyB\014KoloneyProtoP\001Z8github.com/koloney/koloney-protos/v1/go/v1/proto/koloney\242\002\003KXX\252\002\007Koloney\312\002\007Koloney\342\002\023Koloney\\GPBMetadata\352\002\007Koloney'
+  _globals['DESCRIPTOR']._serialized_options = b'\n\013com.koloneyB\014KoloneyProtoP\001Z%koloney-protos/v1/go/v1/proto/koloney\242\002\003KXX\252\002\007Koloney\312\002\007Koloney\342\002\023Koloney\\GPBMetadata\352\002\007Koloney'
   _globals['_KOLONEYSERVICE'].methods_by_name['GetBalance']._loaded_options = None
   _globals['_KOLONEYSERVICE'].methods_by_name['GetBalance']._serialized_options = b'\202\323\344\223\002\r\022\013/v1/balance'
   _globals['_GETBALANCEREQUEST']._serialized_start=106

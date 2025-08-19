@@ -5,7 +5,7 @@ package koloney;
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/koloney/koloney-protos/v1/go/koloney/v1;koloneyv1";
+option go_package = "koloney/v1;koloneyv1";
 
 // KoloneyService provides financial operations
 service KoloneyService {

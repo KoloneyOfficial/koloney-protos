@@ -8,7 +8,7 @@ import (
 	context "context"
 	errors "errors"
 	connect_go "github.com/bufbuild/connect-go"
-	koloney "github.com/koloney/koloney-protos/v1/go/v1/proto/koloney"
+	koloney "koloney-protos/v1/go/v1/proto/koloney"
 	http "net/http"
 	strings "strings"
 )

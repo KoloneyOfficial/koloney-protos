@@ -2,7 +2,7 @@ version: v1
 managed:
   enabled: true
   go_package_prefix:
-    default: github.com/koloney/koloney-protos/v1/go
+    default: koloney-protos/v1/go
 plugins:
   - plugin: buf.build/protocolbuffers/go
     out: v1/go

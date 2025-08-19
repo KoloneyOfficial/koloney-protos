@@ -7,10 +7,10 @@
 package koloney
 
 import (
-	_ "github.com/koloney/koloney-protos/v1/go/google/api"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
+	_ "koloney-protos/v1/go/google/api"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -143,8 +143,8 @@ const file_v1_proto_koloney_koloney_proto_rawDesc = "" +
 	"\flast_updated\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\vlastUpdated2l\n" +
 	"\x0eKoloneyService\x12Z\n" +
 	"\n" +
-	"GetBalance\x12\x1a.koloney.GetBalanceRequest\x1a\x1b.koloney.GetBalanceResponse\"\x13\x82\xd3\xe4\x93\x02\r\x12\v/v1/balanceB\x91\x01\n" +
-	"\vcom.koloneyB\fKoloneyProtoP\x01Z8github.com/koloney/koloney-protos/v1/go/v1/proto/koloney\xa2\x02\x03KXX\xaa\x02\aKoloney\xca\x02\aKoloney\xe2\x02\x13Koloney\\GPBMetadata\xea\x02\aKoloneyb\x06proto3"
+	"GetBalance\x12\x1a.koloney.GetBalanceRequest\x1a\x1b.koloney.GetBalanceResponse\"\x13\x82\xd3\xe4\x93\x02\r\x12\v/v1/balanceB~\n" +
+	"\vcom.koloneyB\fKoloneyProtoP\x01Z%koloney-protos/v1/go/v1/proto/koloney\xa2\x02\x03KXX\xaa\x02\aKoloney\xca\x02\aKoloney\xe2\x02\x13Koloney\\GPBMetadata\xea\x02\aKoloneyb\x06proto3"
 
 var (
 	file_v1_proto_koloney_koloney_proto_rawDescOnce sync.Once
