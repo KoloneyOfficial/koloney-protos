@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package company;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "v1/proto/company/entities.proto";
+
+option go_package = "company;company";
+
+// CompanyService provides company management functionality
+service CompanyService {
+  // CreateCompany creates a new company profile
+  rpc CreateCompany(CreateCompanyRequest) returns (Company) {}
+  
+  // GetCompany retrieves a company by ID
+  rpc GetCompany(GetCompanyRequest) returns (Company) {}
+  
+  // UpdateCompany updates an existing company profile
+  rpc UpdateCompany(UpdateCompanyRequest) returns (Company) {}
+  
+  // DeleteCompany removes a company profile
+  rpc DeleteCompany(DeleteCompanyRequest) returns (google.protobuf.Empty) {}
+  
+  // ListCompanies retrieves a paginated list of companies
+  rpc ListCompanies(ListCompaniesRequest) returns (ListCompaniesResponse) {}
+  
+  // SearchCompanies searches for companies based on criteria
+  rpc SearchCompanies(SearchCompaniesRequest) returns (SearchCompaniesResponse) {}
+  
+  // UpdateCompanyStatus changes the status of a company
+  rpc UpdateCompanyStatus(UpdateCompanyStatusRequest) returns (Company) {}
+  
+  // VerifyCompany marks a company as verified
+  rpc VerifyCompany(VerifyCompanyRequest) returns (Company) {}
+}
+
+// CreateCompanyRequest contains the information needed to create a new company
+message CreateCompanyRequest {
+  string name = 1;
+  string description = 2;
+  CompanyIndustry industry = 3;
+  CompanySize size = 4;
+  CompanyLocation location = 5;
+  CompanyContact contact = 6;
+  CompanyProfile profile = 7;
+}
+
+// GetCompanyRequest contains the ID of the company to retrieve
+message GetCompanyRequest {
+  string company_id = 1;
+}
+
+// UpdateCompanyRequest contains the fields that can be updated for a company
+message UpdateCompanyRequest {
+  string company_id = 1;
+  optional string name = 2;
+  optional string description = 3;
+  optional CompanyIndustry industry = 4;
+  optional CompanySize size = 5;
+  optional CompanyLocation location = 6;
+  optional CompanyContact contact = 7;
+  optional CompanyProfile profile = 8;
+}
+
+// DeleteCompanyRequest contains the ID of the company to delete
+message DeleteCompanyRequest {
+  string company_id = 1;
+}
+
+// ListCompaniesRequest contains pagination and filtering parameters
+message ListCompaniesRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+  optional CompanyIndustry industry = 3;
+  optional CompanySize size = 4;
+  optional CompanyStatus status = 5;
+  optional string location = 6;
+}
+
+// ListCompaniesResponse contains a page of companies and pagination info
+message ListCompaniesResponse {
+  repeated Company companies = 1;
+  string next_page_token = 2;
+  int32 total_count = 3;
+}
+
+// SearchCompaniesRequest contains search criteria
+message SearchCompaniesRequest {
+  string query = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+  optional CompanyIndustry industry = 4;
+  optional CompanySize size = 5;
+  optional string location = 6;
+}
+
+// SearchCompaniesResponse contains search results
+message SearchCompaniesResponse {
+  repeated Company companies = 1;
+  string next_page_token = 2;
+  int32 total_count = 3;
+}
+
+// UpdateCompanyStatusRequest contains the new status for a company
+message UpdateCompanyStatusRequest {
+  string company_id = 1;
+  CompanyStatus status = 2;
+}
+
+// VerifyCompanyRequest contains verification information
+message VerifyCompanyRequest {
+  string company_id = 1;
+  string verification_document_url = 2;
+  string verified_by = 3;
+}

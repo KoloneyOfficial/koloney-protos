@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package job;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "job;job";
+
+// Job represents a job posting
+message Job {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  string company_id = 4;
+  string recruiter_id = 5;
+  JobStatus status = 6;
+  JobType type = 7;
+  JobLocation location = 8;
+  JobRequirements requirements = 9;
+  JobBenefits benefits = 10;
+  google.protobuf.Timestamp created_at = 11;
+  google.protobuf.Timestamp updated_at = 12;
+  google.protobuf.Timestamp expires_at = 13;
+}
+
+// JobStatus represents the current state of a job
+enum JobStatus {
+  JOB_STATUS_UNSPECIFIED = 0;
+  JOB_STATUS_DRAFT = 1;
+  JOB_STATUS_ACTIVE = 2;
+  JOB_STATUS_PAUSED = 3;
+  JOB_STATUS_CLOSED = 4;
+  JOB_STATUS_EXPIRED = 5;
+}
+
+// JobType represents the employment type
+enum JobType {
+  JOB_TYPE_UNSPECIFIED = 0;
+  JOB_TYPE_FULL_TIME = 1;
+  JOB_TYPE_PART_TIME = 2;
+  JOB_TYPE_CONTRACT = 3;
+  JOB_TYPE_INTERNSHIP = 4;
+  JOB_TYPE_FREELANCE = 5;
+}
+
+// JobLocation represents where the job is located
+message JobLocation {
+  string city = 1;
+  string state = 2;
+  string country = 3;
+  bool remote_allowed = 4;
+  string address = 5;
+}
+
+// JobRequirements represents the skills and experience needed
+message JobRequirements {
+  repeated string skills = 1;
+  int32 min_experience_years = 2;
+  string education_level = 3;
+  repeated string certifications = 4;
+  string description = 5;
+}
+
+// JobBenefits represents what the company offers
+message JobBenefits {
+  repeated string benefits = 1;
+  string salary_range = 2;
+  bool health_insurance = 3;
+  bool retirement_plan = 4;
+  bool paid_time_off = 5;
+}

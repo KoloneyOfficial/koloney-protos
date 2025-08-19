@@ -1,0 +1,190 @@
+syntax = "proto3";
+
+package candidate;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "candidate;candidate";
+
+// Candidate represents a job seeker
+message Candidate {
+  string id = 1;
+  string user_id = 2;
+  string first_name = 3;
+  string last_name = 4;
+  string email = 5;
+  string phone = 6;
+  CandidateProfile profile = 7;
+  CandidateExperience experience = 8;
+  CandidateEducation education = 9;
+  CandidateSkills skills = 10;
+  CandidatePreferences preferences = 11;
+  CandidateStatus status = 12;
+  google.protobuf.Timestamp created_at = 13;
+  google.protobuf.Timestamp updated_at = 14;
+}
+
+// CandidateProfile represents personal and professional information
+message CandidateProfile {
+  string headline = 1;
+  string summary = 2;
+  string avatar_url = 3;
+  string location = 4;
+  string linkedin_url = 5;
+  string portfolio_url = 6;
+  string github_url = 7;
+  string website = 8;
+  string date_of_birth = 9;
+  string nationality = 10;
+  repeated string languages = 11;
+}
+
+// CandidateExperience represents work history
+message CandidateExperience {
+  repeated WorkExperience work_experience = 1;
+  repeated ProjectExperience project_experience = 2;
+  repeated VolunteerExperience volunteer_experience = 3;
+}
+
+// WorkExperience represents a job position
+message WorkExperience {
+  string id = 1;
+  string company_name = 2;
+  string job_title = 3;
+  string description = 4;
+  google.protobuf.Timestamp start_date = 5;
+  google.protobuf.Timestamp end_date = 6;
+  bool current_position = 7;
+  repeated string achievements = 8;
+  repeated string technologies = 9;
+}
+
+// ProjectExperience represents project work
+message ProjectExperience {
+  string id = 1;
+  string project_name = 2;
+  string description = 3;
+  string role = 4;
+  google.protobuf.Timestamp start_date = 5;
+  google.protobuf.Timestamp end_date = 6;
+  string project_url = 7;
+  repeated string technologies = 8;
+}
+
+// VolunteerExperience represents volunteer work
+message VolunteerExperience {
+  string id = 1;
+  string organization = 2;
+  string role = 3;
+  string description = 4;
+  google.protobuf.Timestamp start_date = 5;
+  google.protobuf.Timestamp end_date = 6;
+  bool current_position = 7;
+}
+
+// CandidateEducation represents educational background
+message CandidateEducation {
+  repeated EducationDegree degrees = 1;
+  repeated Certification certifications = 2;
+  repeated Training training = 3;
+}
+
+// EducationDegree represents a degree or diploma
+message EducationDegree {
+  string id = 1;
+  string institution = 2;
+  string degree = 3;
+  string field_of_study = 4;
+  google.protobuf.Timestamp start_date = 5;
+  google.protobuf.Timestamp end_date = 6;
+  float gpa = 7;
+  repeated string achievements = 8;
+}
+
+// Certification represents professional certifications
+message Certification {
+  string id = 1;
+  string name = 2;
+  string issuing_organization = 3;
+  google.protobuf.Timestamp issue_date = 4;
+  google.protobuf.Timestamp expiry_date = 5;
+  string credential_id = 6;
+  string credential_url = 7;
+}
+
+// Training represents training programs
+message Training {
+  string id = 1;
+  string program_name = 2;
+  string provider = 3;
+  google.protobuf.Timestamp completion_date = 4;
+  string description = 5;
+  string certificate_url = 6;
+}
+
+// CandidateSkills represents technical and soft skills
+message CandidateSkills {
+  repeated TechnicalSkill technical_skills = 1;
+  repeated SoftSkill soft_skills = 2;
+  repeated LanguageSkill language_skills = 3;
+}
+
+// TechnicalSkill represents a technical skill
+message TechnicalSkill {
+  string name = 1;
+  SkillLevel level = 2;
+  int32 years_of_experience = 3;
+  repeated string related_technologies = 4;
+}
+
+// SoftSkill represents a soft skill
+message SoftSkill {
+  string name = 1;
+  SkillLevel level = 2;
+  string description = 3;
+}
+
+// LanguageSkill represents language proficiency
+message LanguageSkill {
+  string language = 1;
+  LanguageProficiency proficiency = 2;
+  bool native_speaker = 3;
+}
+
+// SkillLevel represents proficiency level
+enum SkillLevel {
+  SKILL_LEVEL_UNSPECIFIED = 0;
+  SKILL_LEVEL_BEGINNER = 1;
+  SKILL_LEVEL_INTERMEDIATE = 2;
+  SKILL_LEVEL_ADVANCED = 3;
+  SKILL_LEVEL_EXPERT = 4;
+}
+
+// LanguageProficiency represents language skill level
+enum LanguageProficiency {
+  LANGUAGE_PROFICIENCY_UNSPECIFIED = 0;
+  LANGUAGE_PROFICIENCY_BASIC = 1;
+  LANGUAGE_PROFICIENCY_CONVERSATIONAL = 2;
+  LANGUAGE_PROFICIENCY_FLUENT = 3;
+  LANGUAGE_PROFICIENCY_NATIVE = 4;
+}
+
+// CandidatePreferences represents job preferences
+message CandidatePreferences {
+  repeated string preferred_job_types = 1;
+  repeated string preferred_industries = 2;
+  repeated string preferred_locations = 3;
+  string salary_expectation = 4;
+  bool remote_work_preferred = 5;
+  bool willing_to_relocate = 6;
+  string notice_period = 7;
+}
+
+// CandidateStatus represents the candidate's current state
+enum CandidateStatus {
+  CANDIDATE_STATUS_UNSPECIFIED = 0;
+  CANDIDATE_STATUS_ACTIVE = 1;
+  CANDIDATE_STATUS_INACTIVE = 2;
+  CANDIDATE_STATUS_EMPLOYED = 3;
+  CANDIDATE_STATUS_OPEN_TO_OPPORTUNITIES = 4;
+}
