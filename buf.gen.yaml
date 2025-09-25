@@ -2,24 +2,24 @@ version: v1
 managed:
   enabled: true
   go_package_prefix:
-    default: koloney-protos/v1/go
+    default: koloney-protos/go/v1
 plugins:
   - plugin: buf.build/protocolbuffers/go
-    out: v1/go
+    out: go
     opt: paths=source_relative
   - plugin: buf.build/grpc/go
-    out: v1/go
+    out: go
     opt: paths=source_relative
   - plugin: buf.build/bufbuild/connect-go
-    out: v1/go
+    out: go
     opt: paths=source_relative
   - plugin: buf.build/protocolbuffers/python
-    out: v1/py
+    out: py
   - plugin: buf.build/grpc/python
-    out: v1/py
+    out: py
   - plugin: buf.build/bufbuild/es
-    out: v1/js
+    out: ts
     opt: target=ts
   - plugin: buf.build/bufbuild/connect-es
-    out: v1/js
+    out: ts
     opt: target=ts

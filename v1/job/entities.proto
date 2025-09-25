@@ -1,0 +1,161 @@
+syntax = "proto3";
+
+package koloney.v1.job;
+
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/koloney/koloney-protos/gen/koloney/v1/job;jobv1";
+option java_multiple_files = true;
+option java_outer_classname = "JobProto";
+option java_package = "com.koloney.job.v1";
+
+// Job represents a job posting.
+message Job {
+  option (google.api.resource) = {
+    type: "koloney.googleapis.com/Job"
+    pattern: "jobs/{job}"
+  };
+
+  // The resource name of the job.
+  // Format: `jobs/{job}`
+  string name = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The unique identifier of the job.
+  string uid = 2 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The job title.
+  string title = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The job description.
+  string description = 4 [(google.api.field_behavior) = REQUIRED];
+
+  // The resource name of the company that posted the job.
+  // Format: `companies/{company}`
+  string company = 5 [(google.api.field_behavior) = REQUIRED];
+
+  // The resource name of the recruiter who posted the job.
+  // Format: `users/{user}`
+  string recruiter = 6 [(google.api.field_behavior) = REQUIRED];
+
+  // The current status of the job.
+  JobStatus status = 7 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The type of employment.
+  JobType type = 8 [(google.api.field_behavior) = REQUIRED];
+
+  // The job location information.
+  JobLocation location = 9 [(google.api.field_behavior) = REQUIRED];
+
+  // The job requirements.
+  JobRequirements requirements = 10;
+
+  // The job benefits.
+  JobBenefits benefits = 11;
+
+  // The creation timestamp of the job.
+  google.protobuf.Timestamp create_time = 12 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The last update timestamp of the job.
+  google.protobuf.Timestamp update_time = 13 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The expiration timestamp of the job.
+  google.protobuf.Timestamp expire_time = 14;
+}
+
+// JobStatus represents the current state of a job.
+enum JobStatus {
+  // The job status is unspecified.
+  JOB_STATUS_UNSPECIFIED = 0;
+
+  // The job is in draft mode.
+  JOB_STATUS_DRAFT = 1;
+
+  // The job is active and accepting applications.
+  JOB_STATUS_ACTIVE = 2;
+
+  // The job is paused and not accepting applications.
+  JOB_STATUS_PAUSED = 3;
+
+  // The job is closed and no longer accepting applications.
+  JOB_STATUS_CLOSED = 4;
+
+  // The job has expired.
+  JOB_STATUS_EXPIRED = 5;
+}
+
+// JobType represents the employment type.
+enum JobType {
+  // The job type is unspecified.
+  JOB_TYPE_UNSPECIFIED = 0;
+
+  // Full-time employment.
+  JOB_TYPE_FULL_TIME = 1;
+
+  // Part-time employment.
+  JOB_TYPE_PART_TIME = 2;
+
+  // Contract work.
+  JOB_TYPE_CONTRACT = 3;
+
+  // Internship position.
+  JOB_TYPE_INTERNSHIP = 4;
+
+  // Freelance work.
+  JOB_TYPE_FREELANCE = 5;
+}
+
+// JobLocation represents where the job is located.
+message JobLocation {
+  // The city where the job is located.
+  string city = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The state or province where the job is located.
+  string state = 2;
+
+  // The country where the job is located.
+  string country = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // Whether remote work is allowed.
+  bool remote_allowed = 4;
+
+  // The full address of the job location.
+  string address = 5;
+}
+
+// JobRequirements represents the skills and experience needed.
+message JobRequirements {
+  // The required skills for the job.
+  repeated string skills = 1;
+
+  // The minimum years of experience required.
+  int32 min_experience_years = 2;
+
+  // The required education level.
+  string education_level = 3;
+
+  // The required certifications.
+  repeated string certifications = 4;
+
+  // Additional requirements description.
+  string description = 5;
+}
+
+// JobBenefits represents what the company offers.
+message JobBenefits {
+  // The list of benefits offered.
+  repeated string benefits = 1;
+
+  // The salary range for the position.
+  string salary_range = 2;
+
+  // Whether health insurance is provided.
+  bool health_insurance = 3;
+
+  // Whether a retirement plan is provided.
+  bool retirement_plan = 4;
+
+  // Whether paid time off is provided.
+  bool paid_time_off = 5;
+}

@@ -1,0 +1,191 @@
+syntax = "proto3";
+
+package koloney.v1.company;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+import "v1/company/entities.proto";
+
+option go_package = "github.com/koloney/koloney-protos/gen/koloney/v1/company;companyv1";
+option java_multiple_files = true;
+option java_outer_classname = "CompanyProto";
+option java_package = "com.koloney.company.v1";
+
+// CompanyService provides company management functionality.
+service CompanyService {
+  // CreateCompany creates a new company profile.
+  rpc CreateCompany(CreateCompanyRequest) returns (Company) {
+    option (google.api.http) = {
+      post: "/v1/companies"
+      body: "company"
+    };
+  }
+
+  // GetCompany retrieves a company by name.
+  rpc GetCompany(GetCompanyRequest) returns (Company) {
+    option (google.api.http) = {
+      get: "/v1/{name=companies/*}"
+    };
+  }
+
+  // UpdateCompany updates an existing company profile.
+  rpc UpdateCompany(UpdateCompanyRequest) returns (Company) {
+    option (google.api.http) = {
+      patch: "/v1/{company.name=companies/*}"
+      body: "company"
+    };
+  }
+
+  // DeleteCompany removes a company profile.
+  rpc DeleteCompany(DeleteCompanyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/{name=companies/*}"
+    };
+  }
+
+  // ListCompanies retrieves a paginated list of companies.
+  rpc ListCompanies(ListCompaniesRequest) returns (ListCompaniesResponse) {
+    option (google.api.http) = {
+      get: "/v1/companies"
+    };
+  }
+
+  // SearchCompanies searches for companies based on criteria.
+  rpc SearchCompanies(SearchCompaniesRequest) returns (SearchCompaniesResponse) {
+    option (google.api.http) = {
+      get: "/v1/companies:search"
+    };
+  }
+
+  // UpdateCompanyStatus changes the status of a company.
+  rpc UpdateCompanyStatus(UpdateCompanyStatusRequest) returns (Company) {
+    option (google.api.http) = {
+      patch: "/v1/{company.name=companies/*}:updateStatus"
+      body: "*"
+    };
+  }
+
+  // VerifyCompany marks a company as verified.
+  rpc VerifyCompany(VerifyCompanyRequest) returns (Company) {
+    option (google.api.http) = {
+      post: "/v1/{name=companies/*}:verify"
+      body: "*"
+    };
+  }
+}
+
+// CreateCompanyRequest contains the information needed to create a new company.
+message CreateCompanyRequest {
+  // The company resource to create.
+  Company company = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// GetCompanyRequest contains the name of the company to retrieve.
+message GetCompanyRequest {
+  // The name of the company to retrieve.
+  // Format: `companies/{company}`
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// UpdateCompanyRequest contains the fields that can be updated for a company.
+message UpdateCompanyRequest {
+  // The company resource which replaces the resource on the server.
+  Company company = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The list of fields to update.
+  google.protobuf.FieldMask update_mask = 2;
+}
+
+// DeleteCompanyRequest contains the name of the company to delete.
+message DeleteCompanyRequest {
+  // The name of the company to delete.
+  // Format: `companies/{company}`
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// ListCompaniesRequest contains pagination and filtering parameters.
+message ListCompaniesRequest {
+  // The maximum number of companies to return.
+  int32 page_size = 1;
+
+  // The next_page_token value returned from a previous List request, if any.
+  string page_token = 2;
+
+  // Filter companies by industry.
+  optional CompanyIndustry industry = 3;
+
+  // Filter companies by size.
+  optional CompanySize size = 4;
+
+  // Filter companies by status.
+  optional CompanyStatus status = 5;
+
+  // Filter companies by location.
+  optional string location = 6;
+}
+
+// ListCompaniesResponse contains a page of companies and pagination info.
+message ListCompaniesResponse {
+  // The list of companies.
+  repeated Company companies = 1;
+
+  // Token to retrieve the next page of results.
+  string next_page_token = 2;
+
+  // The total number of companies matching the request.
+  int32 total_size = 3;
+}
+
+// SearchCompaniesRequest contains search criteria.
+message SearchCompaniesRequest {
+  // The search query.
+  string query = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The maximum number of companies to return.
+  int32 page_size = 2;
+
+  // The next_page_token value returned from a previous Search request, if any.
+  string page_token = 3;
+
+  // Filter companies by industry.
+  optional CompanyIndustry industry = 4;
+
+  // Filter companies by size.
+  optional CompanySize size = 5;
+
+  // Filter companies by location.
+  optional string location = 6;
+}
+
+// SearchCompaniesResponse contains search results.
+message SearchCompaniesResponse {
+  // The list of companies matching the search criteria.
+  repeated Company companies = 1;
+
+  // Token to retrieve the next page of results.
+  string next_page_token = 2;
+
+  // The total number of companies matching the search criteria.
+  int32 total_size = 3;
+}
+
+// UpdateCompanyStatusRequest contains the new status for a company.
+message UpdateCompanyStatusRequest {
+  // The company resource to update.
+  Company company = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// VerifyCompanyRequest contains verification information.
+message VerifyCompanyRequest {
+  // The name of the company to verify.
+  // Format: `companies/{company}`
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The URL to the verification document.
+  string verification_document_url = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The name of the person who verified the company.
+  string verified_by = 3 [(google.api.field_behavior) = REQUIRED];
+}

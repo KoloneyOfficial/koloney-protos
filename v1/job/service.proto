@@ -1,0 +1,172 @@
+syntax = "proto3";
+
+package koloney.v1.job;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+import "v1/job/entities.proto";
+
+option go_package = "github.com/koloney/koloney-protos/gen/koloney/v1/job;jobv1";
+option java_multiple_files = true;
+option java_outer_classname = "JobProto";
+option java_package = "com.koloney.job.v1";
+
+// JobService provides job posting and management functionality.
+service JobService {
+  // CreateJob creates a new job posting.
+  rpc CreateJob(CreateJobRequest) returns (Job) {
+    option (google.api.http) = {
+      post: "/v1/jobs"
+      body: "job"
+    };
+  }
+
+  // GetJob retrieves a job by name.
+  rpc GetJob(GetJobRequest) returns (Job) {
+    option (google.api.http) = {
+      get: "/v1/{name=jobs/*}"
+    };
+  }
+
+  // UpdateJob updates an existing job posting.
+  rpc UpdateJob(UpdateJobRequest) returns (Job) {
+    option (google.api.http) = {
+      patch: "/v1/{job.name=jobs/*}"
+      body: "job"
+    };
+  }
+
+  // DeleteJob removes a job posting.
+  rpc DeleteJob(DeleteJobRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/{name=jobs/*}"
+    };
+  }
+
+  // ListJobs retrieves a paginated list of jobs.
+  rpc ListJobs(ListJobsRequest) returns (ListJobsResponse) {
+    option (google.api.http) = {
+      get: "/v1/jobs"
+    };
+  }
+
+  // SearchJobs searches for jobs based on criteria.
+  rpc SearchJobs(SearchJobsRequest) returns (SearchJobsResponse) {
+    option (google.api.http) = {
+      get: "/v1/jobs:search"
+    };
+  }
+
+  // UpdateJobStatus changes the status of a job.
+  rpc UpdateJobStatus(UpdateJobStatusRequest) returns (Job) {
+    option (google.api.http) = {
+      patch: "/v1/{job.name=jobs/*}:updateStatus"
+      body: "*"
+    };
+  }
+}
+
+// CreateJobRequest contains the information needed to create a new job.
+message CreateJobRequest {
+  // The job resource to create.
+  Job job = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// GetJobRequest contains the name of the job to retrieve.
+message GetJobRequest {
+  // The name of the job to retrieve.
+  // Format: `jobs/{job}`
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// UpdateJobRequest contains the fields that can be updated for a job.
+message UpdateJobRequest {
+  // The job resource which replaces the resource on the server.
+  Job job = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The list of fields to update.
+  google.protobuf.FieldMask update_mask = 2;
+}
+
+// DeleteJobRequest contains the name of the job to delete.
+message DeleteJobRequest {
+  // The name of the job to delete.
+  // Format: `jobs/{job}`
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// ListJobsRequest contains pagination and filtering parameters.
+message ListJobsRequest {
+  // The maximum number of jobs to return.
+  int32 page_size = 1;
+
+  // The next_page_token value returned from a previous List request, if any.
+  string page_token = 2;
+
+  // Filter jobs by company.
+  // Format: `companies/{company}`
+  optional string company = 3;
+
+  // Filter jobs by recruiter.
+  // Format: `users/{user}`
+  optional string recruiter = 4;
+
+  // Filter jobs by status.
+  optional JobStatus status = 5;
+
+  // Filter jobs by type.
+  optional JobType type = 6;
+}
+
+// ListJobsResponse contains a page of jobs and pagination info.
+message ListJobsResponse {
+  // The list of jobs.
+  repeated Job jobs = 1;
+
+  // Token to retrieve the next page of results.
+  string next_page_token = 2;
+
+  // The total number of jobs matching the request.
+  int32 total_size = 3;
+}
+
+// SearchJobsRequest contains search criteria.
+message SearchJobsRequest {
+  // The search query.
+  string query = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The maximum number of jobs to return.
+  int32 page_size = 2;
+
+  // The next_page_token value returned from a previous Search request, if any.
+  string page_token = 3;
+
+  // Filter jobs by location.
+  optional string location = 4;
+
+  // Filter jobs by type.
+  optional JobType type = 5;
+
+  // Filter jobs by minimum experience.
+  optional int32 min_experience = 6;
+}
+
+// SearchJobsResponse contains search results.
+message SearchJobsResponse {
+  // The list of jobs matching the search criteria.
+  repeated Job jobs = 1;
+
+  // Token to retrieve the next page of results.
+  string next_page_token = 2;
+
+  // The total number of jobs matching the search criteria.
+  int32 total_size = 3;
+}
+
+// UpdateJobStatusRequest contains the new status for a job.
+message UpdateJobStatusRequest {
+  // The job resource to update.
+  Job job = 1 [(google.api.field_behavior) = REQUIRED];
+}

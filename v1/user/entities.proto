@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package koloney.v1.user;
+
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/koloney/koloney-protos/gen/koloney/v1/user;userv1";
+option java_multiple_files = true;
+option java_outer_classname = "UserProto";
+option java_package = "com.koloney.user.v1";
+
+// User represents a user account in the Koloney system.
+message User {
+  option (google.api.resource) = {
+    type: "koloney.googleapis.com/User"
+    pattern: "users/{user}"
+  };
+
+  // The resource name of the user.
+  // Format: `users/{user}`
+  string name = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The unique identifier of the user.
+  string uid = 2 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The user's email address.
+  string email = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The user's display name.
+  string display_name = 4 [(google.api.field_behavior) = REQUIRED];
+
+  // The user's profile picture URL.
+  optional string avatar_url = 5;
+
+  // The user's account status.
+  UserStatus status = 6 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The user's preferences.
+  UserPreferences preferences = 7;
+
+  // The creation timestamp of the user.
+  google.protobuf.Timestamp create_time = 8 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The last update timestamp of the user.
+  google.protobuf.Timestamp update_time = 9 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The last login timestamp of the user.
+  google.protobuf.Timestamp last_login_time = 10 [(google.api.field_behavior) = OUTPUT_ONLY];
+}
+
+// UserStatus represents the possible states of a user account.
+enum UserStatus {
+  // The user status is unspecified.
+  USER_STATUS_UNSPECIFIED = 0;
+
+  // The user account is active.
+  USER_STATUS_ACTIVE = 1;
+
+  // The user account is suspended.
+  USER_STATUS_SUSPENDED = 2;
+
+  // The user account is deleted.
+  USER_STATUS_DELETED = 3;
+}
+
+// UserPreferences contains user-specific settings.
+message UserPreferences {
+  // Whether email notifications are enabled.
+  bool email_notifications_enabled = 1;
+
+  // The preferred language code (e.g., "en-US").
+  string language = 2;
+
+  // The theme preference (light/dark).
+  string theme = 3;
+
+  // The time zone (e.g., "America/New_York").
+  string timezone = 4;
+}

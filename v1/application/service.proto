@@ -1,0 +1,136 @@
+syntax = "proto3";
+
+package koloney.v1.application;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+import "v1/application/entities.proto";
+
+option go_package = "github.com/koloney/koloney-protos/gen/koloney/v1/application;applicationv1";
+option java_multiple_files = true;
+option java_outer_classname = "ApplicationProto";
+option java_package = "com.koloney.application.v1";
+
+// ApplicationService provides application management functionality.
+service ApplicationService {
+  // CreateApplication creates a new job application.
+  rpc CreateApplication(CreateApplicationRequest) returns (Application) {
+    option (google.api.http) = {
+      post: "/v1/applications"
+      body: "application"
+    };
+  }
+
+  // GetApplication retrieves an application by name.
+  rpc GetApplication(GetApplicationRequest) returns (Application) {
+    option (google.api.http) = {
+      get: "/v1/{name=applications/*}"
+    };
+  }
+
+  // UpdateApplication updates an existing application.
+  rpc UpdateApplication(UpdateApplicationRequest) returns (Application) {
+    option (google.api.http) = {
+      patch: "/v1/{application.name=applications/*}"
+      body: "application"
+    };
+  }
+
+  // DeleteApplication removes an application.
+  rpc DeleteApplication(DeleteApplicationRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/{name=applications/*}"
+    };
+  }
+
+  // ListApplications retrieves a paginated list of applications.
+  rpc ListApplications(ListApplicationsRequest) returns (ListApplicationsResponse) {
+    option (google.api.http) = {
+      get: "/v1/applications"
+    };
+  }
+
+  // UpdateApplicationStatus changes the status of an application.
+  rpc UpdateApplicationStatus(UpdateApplicationStatusRequest) returns (Application) {
+    option (google.api.http) = {
+      patch: "/v1/{application.name=applications/*}:updateStatus"
+      body: "*"
+    };
+  }
+}
+
+// CreateApplicationRequest contains the information needed to create a new application.
+message CreateApplicationRequest {
+  // The application resource to create.
+  Application application = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// GetApplicationRequest contains the name of the application to retrieve.
+message GetApplicationRequest {
+  // The name of the application to retrieve.
+  // Format: `applications/{application}`
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// UpdateApplicationRequest contains the fields that can be updated for an application.
+message UpdateApplicationRequest {
+  // The application resource which replaces the resource on the server.
+  Application application = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The list of fields to update.
+  google.protobuf.FieldMask update_mask = 2;
+}
+
+// DeleteApplicationRequest contains the name of the application to delete.
+message DeleteApplicationRequest {
+  // The name of the application to delete.
+  // Format: `applications/{application}`
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// ListApplicationsRequest contains pagination and filtering parameters.
+message ListApplicationsRequest {
+  // The maximum number of applications to return.
+  int32 page_size = 1;
+
+  // The next_page_token value returned from a previous List request, if any.
+  string page_token = 2;
+
+  // Filter applications by job.
+  // Format: `jobs/{job}`
+  optional string job = 3;
+
+  // Filter applications by candidate.
+  // Format: `users/{user}`
+  optional string candidate = 4;
+
+  // Filter applications by company.
+  // Format: `companies/{company}`
+  optional string company = 5;
+
+  // Filter applications by status.
+  optional ApplicationStatus status = 6;
+
+  // Filter applications by stage.
+  optional ApplicationStage stage = 7;
+}
+
+// ListApplicationsResponse contains a page of applications and pagination info.
+message ListApplicationsResponse {
+  // The list of applications.
+  repeated Application applications = 1;
+
+  // Token to retrieve the next page of results.
+  string next_page_token = 2;
+
+  // The total number of applications matching the request.
+  int32 total_size = 3;
+}
+
+// UpdateApplicationStatusRequest contains the new status for an application.
+message UpdateApplicationStatusRequest {
+  // The application resource to update.
+  Application application = 1 [(google.api.field_behavior) = REQUIRED];
+}
