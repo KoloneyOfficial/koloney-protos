@@ -1,0 +1,168 @@
+syntax = "proto3";
+
+package koloney.application.v1;
+
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/koloney/koloney-protos/gen/koloney/v1/application;applicationv1";
+option java_multiple_files = true;
+option java_outer_classname = "ApplicationProto";
+option java_package = "com.koloney.application.v1";
+
+// Application represents a job application.
+message Application {
+  option (google.api.resource) = {
+    type: "koloney.googleapis.com/Application"
+    pattern: "applications/{application}"
+  };
+
+  // The resource name of the application.
+  // Format: `applications/{application}`
+  string name = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The unique identifier of the application.
+  string uid = 2 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The resource name of the job being applied for.
+  // Format: `jobs/{job}`
+  string job = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The resource name of the candidate applying.
+  // Format: `users/{user}`
+  string candidate = 4 [(google.api.field_behavior) = REQUIRED];
+
+  // The resource name of the company offering the job.
+  // Format: `companies/{company}`
+  string company = 5 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The current status of the application.
+  ApplicationStatus status = 6 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The current stage of the application.
+  ApplicationStage stage = 7 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The application documents.
+  ApplicationDocuments documents = 8;
+
+  // The application notes.
+  ApplicationNotes notes = 9;
+
+  // The application timeline.
+  ApplicationTimeline timeline = 10 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The creation timestamp of the application.
+  google.protobuf.Timestamp create_time = 11 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The last update timestamp of the application.
+  google.protobuf.Timestamp update_time = 12 [(google.api.field_behavior) = OUTPUT_ONLY];
+}
+
+// ApplicationStatus represents the overall status.
+enum ApplicationStatus {
+  // The application status is unspecified.
+  APPLICATION_STATUS_UNSPECIFIED = 0;
+
+  // The application is in draft mode.
+  APPLICATION_STATUS_DRAFT = 1;
+
+  // The application has been submitted.
+  APPLICATION_STATUS_SUBMITTED = 2;
+
+  // The application is under review.
+  APPLICATION_STATUS_UNDER_REVIEW = 3;
+
+  // The application is in the interviewing stage.
+  APPLICATION_STATUS_INTERVIEWING = 4;
+
+  // An offer has been extended.
+  APPLICATION_STATUS_OFFER_EXTENDED = 5;
+
+  // The application has been accepted.
+  APPLICATION_STATUS_ACCEPTED = 6;
+
+  // The application has been rejected.
+  APPLICATION_STATUS_REJECTED = 7;
+
+  // The application has been withdrawn.
+  APPLICATION_STATUS_WITHDRAWN = 8;
+}
+
+// ApplicationStage represents the current stage.
+enum ApplicationStage {
+  // The application stage is unspecified.
+  APPLICATION_STAGE_UNSPECIFIED = 0;
+
+  // The application has been submitted.
+  APPLICATION_STAGE_APPLICATION_SUBMITTED = 1;
+
+  // The application is being screened.
+  APPLICATION_STAGE_SCREENING = 2;
+
+  // The candidate is in phone interview.
+  APPLICATION_STAGE_PHONE_INTERVIEW = 3;
+
+  // The candidate is in technical interview.
+  APPLICATION_STAGE_TECHNICAL_INTERVIEW = 4;
+
+  // The candidate is in on-site interview.
+  APPLICATION_STAGE_ON_SITE_INTERVIEW = 5;
+
+  // References are being checked.
+  APPLICATION_STAGE_REFERENCE_CHECK = 6;
+
+  // An offer has been made.
+  APPLICATION_STAGE_OFFER = 7;
+
+  // Salary negotiation is in progress.
+  APPLICATION_STAGE_NEGOTIATION = 8;
+
+  // The candidate has been hired.
+  APPLICATION_STAGE_HIRED = 9;
+}
+
+// ApplicationDocuments represents attached files.
+message ApplicationDocuments {
+  // The resource name of the resume.
+  // Format: `documents/{document}`
+  string resume = 1;
+
+  // The resource name of the cover letter.
+  // Format: `documents/{document}`
+  string cover_letter = 2;
+
+  // Additional document resource names.
+  // Format: `documents/{document}`
+  repeated string additional_documents = 3;
+
+  // Portfolio links.
+  repeated string portfolio_links = 4;
+}
+
+// ApplicationNotes represents internal notes.
+message ApplicationNotes {
+  // Notes from recruiters.
+  repeated string recruiter_notes = 1;
+
+  // Notes from hiring managers.
+  repeated string hiring_manager_notes = 2;
+
+  // Notes from candidates.
+  repeated string candidate_notes = 3;
+}
+
+// ApplicationTimeline represents key dates.
+message ApplicationTimeline {
+  // When the application was submitted.
+  google.protobuf.Timestamp submitted_time = 1;
+
+  // When the application was first reviewed.
+  google.protobuf.Timestamp first_review_time = 2;
+
+  // When the candidate was last contacted.
+  google.protobuf.Timestamp last_contact_time = 3;
+
+  // The estimated decision date.
+  google.protobuf.Timestamp estimated_decision_time = 4;
+}

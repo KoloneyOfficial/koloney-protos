@@ -1,0 +1,189 @@
+syntax = "proto3";
+
+package koloney.company.v1;
+
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/koloney/koloney-protos/gen/koloney/v1/company;companyv1";
+option java_multiple_files = true;
+option java_outer_classname = "CompanyProto";
+option java_package = "com.koloney.company.v1";
+
+// Company represents an employer organization.
+message Company {
+  option (google.api.resource) = {
+    type: "koloney.googleapis.com/Company"
+    pattern: "companies/{company}"
+  };
+
+  // The resource name of the company.
+  // Format: `companies/{company}`
+  string name = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The unique identifier of the company.
+  string uid = 2 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The company name.
+  string display_name = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The company description.
+  string description = 4;
+
+  // The industry sector of the company.
+  CompanyIndustry industry = 5 [(google.api.field_behavior) = REQUIRED];
+
+  // The size of the company in terms of employees.
+  CompanySize size = 6 [(google.api.field_behavior) = REQUIRED];
+
+  // The company location information.
+  CompanyLocation location = 7 [(google.api.field_behavior) = REQUIRED];
+
+  // The company contact information.
+  CompanyContact contact = 8 [(google.api.field_behavior) = REQUIRED];
+
+  // The company profile details.
+  CompanyProfile profile = 9;
+
+  // The current status of the company.
+  CompanyStatus status = 10 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The creation timestamp of the company.
+  google.protobuf.Timestamp create_time = 11 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The last update timestamp of the company.
+  google.protobuf.Timestamp update_time = 12 [(google.api.field_behavior) = OUTPUT_ONLY];
+}
+
+// CompanyIndustry represents the business sector.
+enum CompanyIndustry {
+  // The company industry is unspecified.
+  COMPANY_INDUSTRY_UNSPECIFIED = 0;
+
+  // Technology industry.
+  COMPANY_INDUSTRY_TECHNOLOGY = 1;
+
+  // Finance industry.
+  COMPANY_INDUSTRY_FINANCE = 2;
+
+  // Healthcare industry.
+  COMPANY_INDUSTRY_HEALTHCARE = 3;
+
+  // Education industry.
+  COMPANY_INDUSTRY_EDUCATION = 4;
+
+  // Retail industry.
+  COMPANY_INDUSTRY_RETAIL = 5;
+
+  // Manufacturing industry.
+  COMPANY_INDUSTRY_MANUFACTURING = 6;
+
+  // Consulting industry.
+  COMPANY_INDUSTRY_CONSULTING = 7;
+
+  // Media industry.
+  COMPANY_INDUSTRY_MEDIA = 8;
+
+  // Other industry.
+  COMPANY_INDUSTRY_OTHER = 9;
+}
+
+// CompanySize represents the number of employees.
+enum CompanySize {
+  // The company size is unspecified.
+  COMPANY_SIZE_UNSPECIFIED = 0;
+
+  // 1-10 employees.
+  COMPANY_SIZE_1_10 = 1;
+
+  // 11-50 employees.
+  COMPANY_SIZE_11_50 = 2;
+
+  // 51-200 employees.
+  COMPANY_SIZE_51_200 = 3;
+
+  // 201-500 employees.
+  COMPANY_SIZE_201_500 = 4;
+
+  // 501-1000 employees.
+  COMPANY_SIZE_501_1000 = 5;
+
+  // 1001-5000 employees.
+  COMPANY_SIZE_1001_5000 = 6;
+
+  // 5001+ employees.
+  COMPANY_SIZE_5001_PLUS = 7;
+}
+
+// CompanyLocation represents where the company is based.
+message CompanyLocation {
+  // The city where the company is located.
+  string city = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The state or province where the company is located.
+  string state = 2;
+
+  // The country where the company is located.
+  string country = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The full address of the company.
+  string address = 4;
+
+  // The postal code of the company location.
+  string postal_code = 5;
+}
+
+// CompanyContact represents contact information.
+message CompanyContact {
+  // The company's email address.
+  string email = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The company's phone number.
+  string phone = 2;
+
+  // The company's website URL.
+  string website = 3;
+
+  // The company's LinkedIn profile URL.
+  string linkedin = 4;
+}
+
+// CompanyProfile represents company details.
+message CompanyProfile {
+  // The company's logo URL.
+  string logo_url = 1;
+
+  // The company's banner image URL.
+  string banner_url = 2;
+
+  // The company's mission statement.
+  string mission = 3;
+
+  // The company's vision statement.
+  string vision = 4;
+
+  // The company's core values.
+  repeated string values = 5;
+
+  // The year the company was founded.
+  string founded_year = 6;
+}
+
+// CompanyStatus represents the company's current state.
+enum CompanyStatus {
+  // The company status is unspecified.
+  COMPANY_STATUS_UNSPECIFIED = 0;
+
+  // The company is active.
+  COMPANY_STATUS_ACTIVE = 1;
+
+  // The company is inactive.
+  COMPANY_STATUS_INACTIVE = 2;
+
+  // The company is pending verification.
+  COMPANY_STATUS_VERIFICATION_PENDING = 3;
+
+  // The company is suspended.
+  COMPANY_STATUS_SUSPENDED = 4;
+}
